@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.todolist.mapper.TaskMapper">
+    <!--    <resultMap id="BaseResultMap" type="com.neo.entity.UserEntity">-->
+    <!--        <id column="id" property="id" jdbcType="BIGINT"/>-->
+    <!--        <result column="userName" property="userName" jdbcType="VARCHAR"/>-->
+    <!--        <result column="passWord" property="passWord" jdbcType="VARCHAR"/>-->
+    <!--        <result column="user_sex" property="userSex" javaType="com.neo.enums.UserSexEnum"/>-->
+    <!--        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>-->
+    <!--    </resultMap>-->
+    
+    <sql id="Base_Column_List">
+        id
+        ,user_id,content,completed
+    </sql>
+    
+    <resultMap id="all" type="com.example.todolist.domain.Task">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="content" column="content"/>
+        <result property="completed" column="completed"/>
+    </resultMap>
+    
+    <select id="getAll" resultMap="all">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM task
+        WHERE user_id = #{userId}
+    </select>
+    
+    <select id="getOne" resultType="com.example.todolist.domain.Task">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM task
+        where id = 1
+    </select>
+    
+    <insert id="addTask" parameterType="com.example.todolist.domain.Task">
+        INSERT INTO task(user_id, content, completed)
+        values (#{userId}, #{content}, #{completed})
+    </insert>
+    
+    <delete id="deleteTask">
+        DELETE
+        from task
+        where id = #{id}
+    </delete>
+    
+    <update id="updateTask" parameterType="com.example.todolist.domain.Task">
+        UPDATE task
+        SET content   = #{content},
+            completed = #{completed}
+        where id = #{id} and user_id = #{userId}
+    </update>
+
+    <select id="queryTask" resultType="com.example.todolist.domain.Task">
+        SELECT *
+        FROM task
+        WHERE id = #{0} and user_id = #{1}
+    </select>
+</mapper>

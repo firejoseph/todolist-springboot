@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: todolist
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/todolist?serverTimezone=UTC
+    username: root
+    password: 3877
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
